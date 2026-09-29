@@ -23,7 +23,10 @@
                             </group>
                         </group>
                         <group string="Establecimientos FEL">
-                            <field name="fe_establishment_ids" nolabel="1">
+                            <field name="fe_establishment_ids"
+                                   nolabel="1"
+                                   colspan="2"
+                                   class="w-100">
                                 <tree editable="bottom">
                                     <field name="fe_tradename"/>
                                     <field name="fe_code"/>

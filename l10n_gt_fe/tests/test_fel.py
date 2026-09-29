@@ -203,6 +203,16 @@ class TestFelXml(TransactionCase):
             "IVA",
         )
 
+    def test_establishment_list_uses_full_group_width(self):
+        view = self.env.ref("l10n_gt_fe.view_company_form")
+        field = ET.fromstring(view.arch_db).find(
+            ".//field[@name='fe_establishment_ids']"
+        )
+
+        self.assertIsNotNone(field)
+        self.assertEqual(field.attrib.get("colspan"), "2")
+        self.assertIn("w-100", field.attrib.get("class", "").split())
+
     def test_fact_xml_contains_valid_amounts_and_timezone(self):
         self.company.fe_vat_affiliation = "PEQ"
         invoice = self._create_invoice()

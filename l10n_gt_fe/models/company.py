@@ -71,18 +71,18 @@ class ResCompanyEstablishment(models.Model):
     _rec_name = "fe_tradename"
     _check_company_auto = True
 
-    fe_tradename = fields.Char(string="Tradename", required=True)
-    fe_code = fields.Integer(string="Establishment Code", required=True)
+    fe_tradename = fields.Char(string="Nombre comercial", required=True)
+    fe_code = fields.Integer(string="Código de establecimiento", required=True)
     company_id = fields.Many2one(
         "res.company",
-        string="Company",
+        string="Compañía",
         required=True,
         default=lambda self: self.env.company,
         ondelete="cascade",
         index=True,
     )
-    export_code = fields.Char(string="Export Code")
-    fe_tradename_street = fields.Char(string="Direccion")
+    export_code = fields.Char(string="Código de exportador")
+    fe_tradename_street = fields.Char(string="Dirección")
     fe_tradename_city = fields.Char(string="Municipio")
     fe_tradename_state_id = fields.Many2one(
         "res.country.state",
