@@ -220,6 +220,11 @@ class TestFelXml(TransactionCase):
         self.assertIsNotNone(field)
         self.assertEqual(field.attrib.get("colspan"), "2")
         self.assertIn("w-100", field.attrib.get("class", "").split())
+        state_field = field.find(".//field[@name='fe_tradename_state_id']")
+        self.assertEqual(
+            state_field.attrib.get("domain"),
+            "[('country_id', '=', parent.country_id)]",
+        )
 
     def test_supported_fel_journals_are_provisioned_idempotently(self):
         expected_journals = {

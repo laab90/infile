@@ -288,5 +288,5 @@ class ResCompanyEstablishment(models.Model):
     fe_tradename_state_id = fields.Many2one(
         "res.country.state",
         string="Departamento",
-        domain="[('country_id', '=', company_id.country_id)]",
+        domain=[("country_id.code", "=", "GT")],
     )

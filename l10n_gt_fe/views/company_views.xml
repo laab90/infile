@@ -32,7 +32,8 @@
                                     <field name="fe_code"/>
                                     <field name="fe_tradename_street"/>
                                     <field name="fe_tradename_city"/>
-                                    <field name="fe_tradename_state_id"/>
+                                    <field name="fe_tradename_state_id"
+                                           domain="[('country_id', '=', parent.country_id)]"/>
                                     <field name="export_code" optional="hide"/>
                                     <field name="company_id" column_invisible="True"/>
                                 </tree>

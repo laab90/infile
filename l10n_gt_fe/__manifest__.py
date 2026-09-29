@@ -3,7 +3,7 @@
 {
     "name": "Factura Electrónica Guatemala - Infile",
     "summary": "Certificación de documentos FEL de Guatemala con Infile",
-    "version": "17.0.3.1.0",
+    "version": "17.0.3.1.1",
     "category": "Accounting/Localizations/EDI",
     "author": "J2L Technologies",
     "depends": ["account", "l10n_gt"],
