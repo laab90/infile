@@ -138,6 +138,9 @@ class TestFelXml(TransactionCase):
         self.assertAlmostEqual(line.price_subtotal, 100.0, places=2)
         self.assertAlmostEqual(line.price_total, 112.0, places=2)
         self.assertAlmostEqual(line.price_tax, 12.0, places=2)
+        self.assertEqual(invoice.fe_count_payment, 1)
+        self.assertEqual(invoice.fe_payment_frequency, 1)
+        self.assertEqual(invoice.incoterm_fel, "FOB")
 
     def test_auxiliary_currency_fields_are_not_stored(self):
         for model_name in (
@@ -147,6 +150,58 @@ class TestFelXml(TransactionCase):
         ):
             with self.subTest(model=model_name):
                 self.assertFalse(self.env[model_name]._fields["currency_id"].store)
+
+    def test_defaults_do_not_backfill_existing_business_tables(self):
+        fields_without_schema_defaults = {
+            "account.move": (
+                "fe_count_payment",
+                "fe_payment_frequency",
+                "tipo_gasto",
+                "incoterm_fel",
+                "active_contingencia",
+                "fe_exhangerate",
+                "documento_xml_fel_name",
+                "resultado_xml_fel_name",
+                "pdf_fel_name",
+            ),
+            "res.partner": ("partner_type",),
+            "res.company": ("fe_vat_affiliation",),
+            "account.tax.group": ("shortname",),
+            "account.journal": ("active_fel",),
+        }
+        for model_name, field_names in fields_without_schema_defaults.items():
+            for field_name in field_names:
+                with self.subTest(model=model_name, field=field_name):
+                    self.assertFalse(self.env[model_name]._fields[field_name].default)
+
+        move_defaults = self.env["account.move"].default_get(
+            [
+                "fe_count_payment",
+                "fe_payment_frequency",
+                "tipo_gasto",
+                "incoterm_fel",
+                "fe_exhangerate",
+            ]
+        )
+        self.assertEqual(move_defaults["fe_count_payment"], 1)
+        self.assertEqual(move_defaults["fe_payment_frequency"], 1)
+        self.assertEqual(move_defaults["tipo_gasto"], "mixto")
+        self.assertEqual(move_defaults["incoterm_fel"], "FOB")
+        self.assertEqual(move_defaults["fe_exhangerate"], "1.00")
+        self.assertEqual(
+            self.env["res.partner"].default_get(["partner_type"])["partner_type"],
+            "NIT",
+        )
+        self.assertEqual(
+            self.env["res.company"].default_get(["fe_vat_affiliation"])[
+                "fe_vat_affiliation"
+            ],
+            "GEN",
+        )
+        self.assertEqual(
+            self.env["account.tax.group"].default_get(["shortname"])["shortname"],
+            "IVA",
+        )
 
     def test_fact_xml_contains_valid_amounts_and_timezone(self):
         self.company.fe_vat_affiliation = "PEQ"

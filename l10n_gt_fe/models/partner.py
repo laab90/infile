@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from odoo import fields, models
+from odoo import api, fields, models
 
 
 class ResPartner(models.Model):
@@ -14,6 +14,11 @@ class ResPartner(models.Model):
             ("EXT", "Pasaporte / identificación extranjera"),
         ],
         string="Tipo de documento FEL",
-        required=True,
-        default="NIT",
     )
+
+    @api.model
+    def default_get(self, fields_list):
+        values = super().default_get(fields_list)
+        if "partner_type" in fields_list and "partner_type" not in values:
+            values["partner_type"] = "NIT"
+        return values

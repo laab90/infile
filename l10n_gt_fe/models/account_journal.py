@@ -18,7 +18,7 @@ TYPE_FE = [
 class AccountJournal(models.Model):
     _inherit = "account.journal"
 
-    active_fel = fields.Boolean(string="Usar FEL / Infile", default=False)
+    active_fel = fields.Boolean(string="Usar FEL / Infile")
     fe_type = fields.Selection(TYPE_FE, string="Tipo de DTE")
     fe_establishment_id = fields.Many2one(
         "res.company.establishment",

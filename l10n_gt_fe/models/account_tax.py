@@ -24,13 +24,19 @@ class AccountTaxGroup(models.Model):
     shortname = fields.Selection(
         SHORTNAMES,
         string="Nombre corto FEL",
-        default="IVA",
         help="Código de impuesto enviado en el XML FEL.",
     )
     withhold = fields.Boolean(
         string="Es retención",
         help="Las retenciones no se incluyen como impuestos sumables del DTE.",
     )
+
+    @api.model
+    def default_get(self, fields_list):
+        values = super().default_get(fields_list)
+        if "shortname" in fields_list and "shortname" not in values:
+            values["shortname"] = "IVA"
+        return values
 
     @api.onchange("shortname")
     def _onchange_shortname(self):

@@ -152,8 +152,8 @@ class AccountMove(models.Model):
         string="Cobros por cuenta ajena",
         copy=True,
     )
-    fe_count_payment = fields.Integer(string="Número de abonos", default=1)
-    fe_payment_frequency = fields.Integer(string="Frecuencia (días)", default=1)
+    fe_count_payment = fields.Integer(string="Número de abonos")
+    fe_payment_frequency = fields.Integer(string="Frecuencia (días)")
     fe_payment_line_ids = fields.One2many(
         "account.move.payment",
         "move_id",
@@ -195,7 +195,6 @@ class AccountMove(models.Model):
             ("combustible", "Combustible"),
         ],
         string="Tipo de gasto",
-        default="mixto",
     )
     consignatario_fel = fields.Many2one(
         "res.partner",
@@ -212,32 +211,41 @@ class AccountMove(models.Model):
         string="Exportador FEL",
         check_company=True,
     )
-    incoterm_fel = fields.Char(string="INCOTERM FEL", default="FOB")
+    incoterm_fel = fields.Char(string="INCOTERM FEL")
     frase_exento_fel = fields.Integer(string="Escenario de exención FEL")
     active_contingencia = fields.Boolean(
         string="Contingencia FEL",
-        default=False,
         copy=False,
     )
-    fe_exhangerate = fields.Char(string="Tasa de cambio", size=16, default="1.00")
+    fe_exhangerate = fields.Char(string="Tasa de cambio", size=16)
 
     # Campos heredados conservados para compatibilidad con integraciones existentes.
     documento_xml_fel = fields.Binary(string="Documento XML FEL", copy=False)
-    documento_xml_fel_name = fields.Char(
-        string="Nombre documento XML FEL",
-        default="documento_xml_fel.xml",
-    )
+    documento_xml_fel_name = fields.Char(string="Nombre documento XML FEL")
     resultado_xml_fel = fields.Binary(string="Resultado XML FEL", copy=False)
-    resultado_xml_fel_name = fields.Char(
-        string="Nombre resultado XML FEL",
-        default="resultado_xml_fel.xml",
-    )
+    resultado_xml_fel_name = fields.Char(string="Nombre resultado XML FEL")
     pdf_fel = fields.Binary(string="PDF FEL", copy=False)
-    pdf_fel_name = fields.Char(string="Nombre PDF FEL", default="pdf_fel.pdf")
+    pdf_fel_name = fields.Char(string="Nombre PDF FEL")
     firma_fel = fields.Char(string="UUID FEL (legado)", copy=False)
     serie_fel = fields.Char(string="Serie FEL (legado)", copy=False)
     numero_fel = fields.Char(string="Número FEL (legado)", copy=False)
     fel_date = fields.Char(string="Fecha certificación (legado)", copy=False)
+
+    @api.model
+    def default_get(self, fields_list):
+        """Set defaults for new moves without backfilling the account_move table."""
+        values = super().default_get(fields_list)
+        fel_defaults = {
+            "fe_count_payment": 1,
+            "fe_payment_frequency": 1,
+            "tipo_gasto": "mixto",
+            "incoterm_fel": "FOB",
+            "fe_exhangerate": "1.00",
+        }
+        for field_name, value in fel_defaults.items():
+            if field_name in fields_list and field_name not in values:
+                values[field_name] = value
+        return values
 
     @api.depends(
         "partner_id.vat",
@@ -709,7 +717,7 @@ class AccountMove(models.Model):
         ET.SubElement(datos_emision, "dte:DatosGenerales", general_values)
 
         emisor_values = {
-            "AfiliacionIVA": company.fe_vat_affiliation,
+            "AfiliacionIVA": company.fe_vat_affiliation or "GEN",
             "CodigoEstablecimiento": str(establishment.fe_code),
             "NITEmisor": self._normalize_identifier(company.vat),
             "NombreComercial": establishment.fe_tradename,

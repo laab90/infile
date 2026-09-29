@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from odoo import _, fields, models
+from odoo import _, api, fields, models
 from odoo.exceptions import ValidationError
 
 
@@ -26,8 +26,6 @@ class ResCompany(models.Model):
             ("PEQ", "Pequeño contribuyente"),
         ],
         string="Afiliación IVA FEL",
-        required=True,
-        default="GEN",
         help="Régimen de IVA del emisor que se informa en el DTE.",
     )
     fe_other_email = fields.Char(string="Correo de copia FEL")
@@ -37,6 +35,16 @@ class ResCompany(models.Model):
         string="Establecimientos FEL",
     )
     fe_phrase_ids = fields.Many2many("account.fe.phrase", string="Frases FEL")
+
+    @api.model
+    def default_get(self, fields_list):
+        values = super().default_get(fields_list)
+        if (
+            "fe_vat_affiliation" in fields_list
+            and "fe_vat_affiliation" not in values
+        ):
+            values["fe_vat_affiliation"] = "GEN"
+        return values
 
     def _get_headers(self):
         self.ensure_one()
