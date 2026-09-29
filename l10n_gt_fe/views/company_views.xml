@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <data>
+        <record id="view_company_form" model="ir.ui.view">
+            <field name="name">view.company.form.inherit</field>
+            <field name="model">res.company</field>
+            <field name="inherit_id" ref="base.view_company_form"/>
+            <field name="arch" type="xml">
+                <notebook position="inside">
+                    <page name="fe" string="FEL / Infile"
+                          groups="account.group_account_manager,l10n_gt_fe.group_fel_manager">
+                        <group string="Credenciales Infile">
+                            <group>
+                                <field name="fe_user" autocomplete="off"/>
+                                <field name="fe_key_webservice" password="True" autocomplete="new-password"/>
+                                <field name="fe_sign_token" password="True" autocomplete="new-password"/>
+                            </group>
+                            <group>
+                                <field name="fe_vat_affiliation"/>
+                                <field name="fe_other_email" widget="email"/>
+                                <field name="fe_phrase_ids" widget="many2many_tags"/>
+                            </group>
+                        </group>
+                        <group string="Establecimientos FEL">
+                            <field name="fe_establishment_ids" nolabel="1">
+                                <tree editable="bottom">
+                                    <field name="fe_tradename"/>
+                                    <field name="fe_code"/>
+                                    <field name="fe_tradename_street"/>
+                                    <field name="fe_tradename_city"/>
+                                    <field name="fe_tradename_state_id"/>
+                                    <field name="export_code" optional="hide"/>
+                                    <field name="company_id" column_invisible="True"/>
+                                </tree>
+                            </field>
+                        </group>
+                    </page>
+                </notebook>
+            </field>
+        </record>
+    </data>
+
+</odoo>

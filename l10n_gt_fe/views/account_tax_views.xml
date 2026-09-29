@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_tax_group_form_fel" model="ir.ui.view">
+        <field name="name">account.tax.group.form.fel</field>
+        <field name="model">account.tax.group</field>
+        <field name="inherit_id" ref="account.view_tax_group_form"/>
+        <field name="arch" type="xml">
+            <field name="name" position="after">
+                <field name="shortname"/>
+                <field name="withhold"/>
+            </field>
+        </field>
+    </record>
+
+    <record id="view_tax_group_tree_fel" model="ir.ui.view">
+        <field name="name">account.tax.group.tree.fel</field>
+        <field name="model">account.tax.group</field>
+        <field name="inherit_id" ref="account.view_tax_group_tree"/>
+        <field name="arch" type="xml">
+            <field name="name" position="after">
+                <field name="shortname" optional="show"/>
+                <field name="withhold" optional="hide"/>
+            </field>
+        </field>
+    </record>
+</odoo>

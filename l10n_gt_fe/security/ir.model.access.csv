@@ -1,0 +1,8 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_account_move_complement_user,account.move.complement.user,model_account_move_complement,account.group_account_user,1,1,1,1
+access_account_move_payment_user,account.move.payment.user,model_account_move_payment,account.group_account_user,1,1,1,1
+access_charge_third_party_account_user,charge.third.party.account.user,model_charge_third_party_account,account.group_account_user,1,1,1,1
+access_res_company_establishment_user,res.company.establishment.user,model_res_company_establishment,account.group_account_user,1,0,0,0
+access_res_company_establishment_manager,res.company.establishment.manager,model_res_company_establishment,account.group_account_manager,1,1,1,1
+access_account_fe_phrase_user,account.fe.phrase.user,model_account_fe_phrase,account.group_account_user,1,0,0,0
+access_account_fe_phrase_manager,account.fe.phrase.manager,model_account_fe_phrase,account.group_account_manager,1,1,1,1

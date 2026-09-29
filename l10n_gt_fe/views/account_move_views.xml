@@ -1,0 +1,261 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_move_form" model="ir.ui.view">
+        <field name="name">account.move.form.fel.infile</field>
+        <field name="model">account.move</field>
+        <field name="inherit_id" ref="account.view_move_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='journal_id']" position="before">
+                <field name="is_fel" invisible="1"/>
+                <field name="rel_establishment_user" invisible="1"/>
+            </xpath>
+
+            <xpath expr="//field[@name='journal_id']" position="attributes">
+                <attribute name="domain">[('id', 'in', suitable_journal_ids), '|', ('active_fel', '=', False), ('fe_establishment_id', '=', rel_establishment_user)]</attribute>
+            </xpath>
+
+            <xpath expr="//div[@name='journal_div']" position="after">
+                <field name="fe_type" invisible="not is_fel"/>
+                <field name="fe_phrase_ids"
+                       widget="many2many_tags"
+                       invisible="not is_fel or move_type not in ('out_invoice', 'out_refund')"
+                       readonly="state != 'draft'"/>
+                <field name="partner_type"
+                       invisible="not is_fel or move_type not in ('out_invoice', 'out_refund')"/>
+                <label for="fe_use_new_vat"
+                       invisible="not is_fel or move_type not in ('out_invoice', 'out_refund')"/>
+                <div class="d-flex"
+                     invisible="not is_fel or move_type not in ('out_invoice', 'out_refund')">
+                    <field name="fe_use_new_vat" readonly="state != 'draft'"/>
+                    <field name="fe_new_vat_id"
+                           class="ms-2"
+                           placeholder="Receptor FEL"
+                           invisible="not fe_use_new_vat"
+                           required="fe_use_new_vat"
+                           readonly="state != 'draft'"
+                           options="{'no_create_edit': True}"/>
+                </div>
+            </xpath>
+
+            <xpath expr="//field[@name='invoice_line_ids']/tree/field[@name='price_subtotal']"
+                   position="after">
+                <field name="price_tax" optional="hide"/>
+                <field name="price_discount" optional="hide"/>
+            </xpath>
+
+            <xpath expr="//button[@name='button_draft']" position="attributes">
+                <attribute name="groups">l10n_gt_fe.set_draft_invoice</attribute>
+            </xpath>
+
+            <header position="inside">
+                <button name="send_invoice"
+                        type="object"
+                        string="Certificar DTE"
+                        class="oe_highlight"
+                        invisible="not is_fel or process_status in ('cancel', 'ok') or state != 'posted' or move_type not in ('out_invoice', 'out_refund')"/>
+                <button name="cancel_dte"
+                        type="object"
+                        string="Anular DTE"
+                        class="btn-secondary"
+                        groups="l10n_gt_fe.group_fel_manager"
+                        confirm="Esta operación anulará el DTE en Infile y cancelará el documento contable. ¿Desea continuar?"
+                        invisible="not is_fel or process_status != 'ok' or state != 'posted' or move_type not in ('out_invoice', 'out_refund')"/>
+                <button name="get_pdf"
+                        type="object"
+                        string="Obtener PDF"
+                        class="btn-secondary"
+                        invisible="not is_fel or process_status not in ('ok', 'cancel') or move_type not in ('out_invoice', 'out_refund')"/>
+            </header>
+
+            <xpath expr="//notebook" position="inside">
+                <page name="fel_infile"
+                      string="FEL / Infile"
+                      invisible="not is_fel or move_type not in ('out_invoice', 'out_refund')">
+                    <group>
+                        <group string="Certificación">
+                            <field name="process_status"
+                                   widget="statusbar"
+                                   statusbar_visible="process,ok,fail,cancel"/>
+                            <field name="certificador_fel" invisible="not certificador_fel"/>
+                            <field name="no_acceso" invisible="not no_acceso"/>
+                            <field name="fe_uuid" invisible="not fe_uuid"/>
+                            <field name="fe_serie" invisible="not fe_serie"/>
+                            <field name="fe_number" invisible="not fe_number"/>
+                            <field name="fe_certification_date" invisible="not fe_certification_date"/>
+                        </group>
+                        <group string="Archivos">
+                            <field name="fe_xml_file_name" invisible="1"/>
+                            <field name="fe_pdf_file_name" invisible="1"/>
+                            <field name="fe_cancel_xml_file_name" invisible="1"/>
+                            <field name="fe_xml_file"
+                                   filename="fe_xml_file_name"
+                                   readonly="1"
+                                   invisible="not fe_xml_file"/>
+                            <field name="fe_pdf_file"
+                                   filename="fe_pdf_file_name"
+                                   readonly="1"
+                                   invisible="not fe_pdf_file"/>
+                            <field name="fe_cancel_xml_file"
+                                   filename="fe_cancel_xml_file_name"
+                                   readonly="1"
+                                   invisible="not fe_cancel_xml_file"/>
+                        </group>
+                    </group>
+
+                    <group string="Documento de referencia"
+                           invisible="fe_type not in ('NCRE', 'NDEB')">
+                        <field name="factura_original_id"
+                               required="fe_type in ('NCRE', 'NDEB')"
+                               readonly="state != 'draft'"
+                               options="{'no_create': True}"/>
+                        <field name="motivo_fel"
+                               required="fe_type in ('NCRE', 'NDEB')"
+                               readonly="process_status in ('ok', 'cancel')"/>
+                    </group>
+
+                    <group string="Factura cambiaria" invisible="fe_type != 'FCAM'">
+                        <group>
+                            <field name="fe_count_payment"
+                                   required="fe_type == 'FCAM'"
+                                   readonly="process_status in ('ok', 'cancel')"/>
+                            <field name="fe_payment_frequency"
+                                   required="fe_type == 'FCAM'"
+                                   readonly="process_status in ('ok', 'cancel')"/>
+                            <button name="compute_fe_payment_line"
+                                    string="Calcular abonos"
+                                    type="object"
+                                    class="btn-secondary"
+                                    invisible="process_status in ('ok', 'cancel')"/>
+                        </group>
+                        <field name="fe_payment_line_ids" nolabel="1">
+                            <tree editable="bottom" create="0" delete="0">
+                                <field name="sequence"/>
+                                <field name="date"/>
+                                <field name="amount" sum="Total"/>
+                                <field name="currency_id" column_invisible="True"/>
+                            </tree>
+                        </field>
+                    </group>
+
+                    <group string="Factura especial" invisible="fe_type != 'FESP'">
+                        <field name="complement_ids" nolabel="1">
+                            <tree create="0" delete="0">
+                                <field name="complement"/>
+                                <field name="base"/>
+                                <field name="amount"/>
+                                <field name="currency_id" column_invisible="True"/>
+                            </tree>
+                        </field>
+                    </group>
+
+                    <group string="Exportación" invisible="fe_type != 'FAEX'">
+                        <group>
+                            <field name="consignatario_fel"
+                                   readonly="process_status in ('ok', 'cancel')"
+                                   options="{'no_create_edit': True}"/>
+                            <field name="comprador_fel"
+                                   readonly="process_status in ('ok', 'cancel')"
+                                   options="{'no_create_edit': True}"/>
+                        </group>
+                        <group>
+                            <field name="exportador_fel"
+                                   readonly="process_status in ('ok', 'cancel')"
+                                   options="{'no_create_edit': True}"/>
+                            <field name="incoterm_fel"
+                                   required="fe_type == 'FAEX'"
+                                   readonly="process_status in ('ok', 'cancel')"/>
+                        </group>
+                    </group>
+
+                    <group string="Cobros por cuenta ajena">
+                        <field name="third_party_account_ids"
+                               nolabel="1"
+                               readonly="process_status in ('ok', 'cancel')">
+                            <tree editable="bottom">
+                                <field name="vat"/>
+                                <field name="number"/>
+                                <field name="date"/>
+                                <field name="name"/>
+                                <field name="amount_untaxes" sum="Base"/>
+                                <field name="amount_dai" sum="DAI"/>
+                                <field name="amount_taxes" sum="IVA"/>
+                                <field name="other_amount" sum="Otros"/>
+                                <field name="amount_total" sum="Total"/>
+                                <field name="currency_id" column_invisible="True"/>
+                            </tree>
+                        </field>
+                    </group>
+
+                    <group string="Respuesta SAT / Infile" invisible="not fe_errors">
+                        <field name="fe_errors" nolabel="1"/>
+                    </group>
+
+                    <group string="Diagnóstico XML"
+                           groups="account.group_account_manager,l10n_gt_fe.group_fel_manager">
+                        <field name="sent_arch_xml"
+                               nolabel="1"
+                               widget="ace"
+                               options="{'mode': 'xml'}"
+                               invisible="not sent_arch_xml"/>
+                        <field name="arch_xml"
+                               nolabel="1"
+                               widget="ace"
+                               options="{'mode': 'xml'}"
+                               invisible="not arch_xml"/>
+                        <field name="xml_response_cancel"
+                               nolabel="1"
+                               widget="ace"
+                               options="{'mode': 'xml'}"
+                               invisible="not xml_response_cancel"/>
+                    </group>
+                </page>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_invoice_tree_inherit_fel" model="ir.ui.view">
+        <field name="name">account.move.tree.fel.infile</field>
+        <field name="model">account.move</field>
+        <field name="inherit_id" ref="account.view_out_invoice_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='name']" position="after">
+                <field name="fe_serie" optional="show"/>
+                <field name="fe_number" optional="show"/>
+                <field name="fe_uuid" optional="hide"/>
+                <field name="process_status"
+                       widget="badge"
+                       decoration-success="process_status == 'ok'"
+                       decoration-danger="process_status == 'fail'"
+                       decoration-warning="process_status == 'process'"
+                       decoration-muted="process_status == 'cancel'"
+                       optional="show"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="account_fe_phrase_view_tree" model="ir.ui.view">
+        <field name="name">account.fe.phrase.view.tree</field>
+        <field name="model">account.fe.phrase</field>
+        <field name="arch" type="xml">
+            <tree editable="bottom">
+                <field name="name"/>
+                <field name="description" optional="hide"/>
+                <field name="type"/>
+                <field name="code"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="account_fe_phrase_action" model="ir.actions.act_window">
+        <field name="name">Frases FEL</field>
+        <field name="res_model">account.fe.phrase</field>
+        <field name="view_mode">tree</field>
+    </record>
+
+    <menuitem id="account_fe_phrase_menu"
+              name="Frases FEL"
+              action="account_fe_phrase_action"
+              parent="account.menu_finance_configuration"
+              groups="account.group_account_manager"
+              sequence="90"/>
+</odoo>

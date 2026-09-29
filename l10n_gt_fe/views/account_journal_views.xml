@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <data>
+
+        <record id="view_account_journal_form" model="ir.ui.view">
+            <field name="name">account.journal.form.inherit.fel</field>
+            <field name="model">account.journal</field>
+            <field name="inherit_id" ref="account.view_account_journal_form"/>
+            <field name="arch" type="xml">
+
+                <!-- Campo -->
+                <field name="type" position="after">
+                    <field name="active_fel" widget="boolean_toggle"/>
+                </field>
+
+                <!-- Notebook -->
+                <notebook position="inside">
+
+                    <page name="page_fel_information"
+                          string="FEL"
+                          invisible="not active_fel">
+
+                        <group>
+                            <group>
+                                <field name="fe_type"
+                                       required="active_fel"
+                                       invisible="not active_fel"/>
+                            </group>
+
+                            <group>
+                                <field name="fe_establishment_id"
+                                       domain="[('company_id', '=', company_id)]"
+                                       required="active_fel"
+                                       invisible="not active_fel"
+                                       options="{'no_create_edit': True}"/>
+                            </group>
+                        </group>
+
+                    </page>
+
+                </notebook>
+
+            </field>
+        </record>
+
+    </data>
+
+</odoo>

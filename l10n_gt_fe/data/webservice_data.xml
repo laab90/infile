@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <record id="url_webservice" model="ir.config_parameter">
+            <field name="key">url.webservice.fe</field>
+            <field name="value">https://certificador.feel.com.gt/fel/certificacion/v2/dte/</field>
+        </record>
+
+        <record id="url_sign_webservice" model="ir.config_parameter">
+            <field name="key">url.sign.webservice.fe</field>
+            <field name="value">https://signer-emisores.feel.com.gt/sign_solicitud_firmas/firma_xml</field>
+        </record>
+
+        <record id="url_cancel_webservice" model="ir.config_parameter">
+            <field name="key">url.webservice.cancel.fe</field>
+            <field name="value">https://certificador.feel.com.gt/fel/anulacion/v2/dte/</field>
+        </record>
+    </data>
+</odoo>

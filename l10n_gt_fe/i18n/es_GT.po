@@ -1,0 +1,498 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* l10n_gt_fe
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 17.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2020-09-01 02:29+0000\n"
+"PO-Revision-Date: 2020-09-01 02:29+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: l10n_gt_fe
+#: model:ir.model,name:l10n_gt_fe.model_account_move_complement
+msgid "Account Move Complement"
+msgstr "Complementos"
+
+#. module: l10n_gt_fe
+#: model:ir.model,name:l10n_gt_fe.model_account_move_payment
+msgid "Account Move Payment"
+msgstr ""
+
+#. module: l10n_gt_fe
+#: model:ir.model,name:l10n_gt_fe.model_account_move_reversal
+msgid "Account Move Reversal"
+msgstr "Revocación de movimiento en cuenta"
+
+#. module: l10n_gt_fe
+#: model:ir.model.fields,field_description:l10n_gt_fe.field_account_move_complement__amount
+#: model:ir.model.fields,field_description:l10n_gt_fe.field_account_move_payment__amount
+msgid "Amount"
+msgstr "Monto"
+
+#. module: l10n_gt_fe
+#: model:ir.model.fields.selection,name:l10n_gt_fe.selection__account_tax_group__shortname__bebidas_alcoholicas
+msgid "BEBIDAS ALCOHOLICAS"
+msgstr ""
+
+#. module: l10n_gt_fe
+#: model:ir.model.fields.selection,name:l10n_gt_fe.selection__account_tax_group__shortname__bebidas_no_alcoholicas
+msgid "BEBIDAS NO ALCOHOLICAS"
+msgstr ""
+
+#. module: l10n_gt_fe
+#: model:ir.model.fields.selection,name:l10n_gt_fe.selection__account_tax_group__shortname__bomberos
+msgid "BOMBEROS"
+msgstr ""
+
+#. module: l10n_gt_fe
+#: model:ir.model.fields,field_description:l10n_gt_fe.field_account_move_complement__base
+msgid "Base Amount"
+msgstr "Monto Base"
+
+#. module: l10n_gt_fe
+#: model:ir.model.fields.selection,name:l10n_gt_fe.selection__account_tax_group__shortname__cemento
+msgid "CEMENTO"
+msgstr ""
+
+#. module: l10n_gt_fe
+#: model:ir.model.fields.selection,name:l10n_gt_fe.selection__account_move__process_status__cancel
+msgid "Cancel"
+msgstr "Anulado"
+
+#. module: l10n_gt_fe
+#: model_terms:ir.ui.view,arch_db:l10n_gt_fe.view_move_form
+msgid "Cancel DTE"
+msgstr "Anular DTE"
+
+#. module: l10n_gt_fe
+#: model:ir.model.fields,field_description:l10n_gt_fe.field_account_move__fe_certification_date
+msgid "Certification Date"
+msgstr "Fecha Certificación"
+
+#. module: l10n_gt_fe
+#: model:ir.model,name:l10n_gt_fe.model_res_company
+msgid "Companies"
+msgstr "Compañías"
+
+#. module: l10n_gt_fe
+#: model:ir.model.fields,field_description:l10n_gt_fe.field_res_company_establishment__company_id
+msgid "Company"
+msgstr "Compañia"
+
+#. module: l10n_gt_fe
+#: model:ir.model,name:l10n_gt_fe.model_res_company_establishment
+msgid "Company Establishment"
+msgstr "Establecimiento"
+
+#. module: l10n_gt_fe
+#: model:ir.model.fields,field_description:l10n_gt_fe.field_account_move_complement__complement
+msgid "Complement"
+msgstr "Complemento"
+
+#. module: l10n_gt_fe
+#: model:ir.model.fields,field_description:l10n_gt_fe.field_account_move__complement_ids
+#: model:ir.model.fields,field_description:l10n_gt_fe.field_account_move__field_name
+msgid "Complements"
+msgstr "Complementos"
+
+#. module: l10n_gt_fe
+#: model_terms:ir.ui.view,arch_db:l10n_gt_fe.view_move_form
+msgid "Compute Payment"
+msgstr "Calcular Abonos"
+
+#. module: l10n_gt_fe
+#: model:ir.model,name:l10n_gt_fe.model_res_partner
+msgid "Contact"
+msgstr "Contacto"
+
+#. module: l10n_gt_fe
+#: model:ir.model.fields,field_description:l10n_gt_fe.field_res_partner__country_id
+#: model:ir.model.fields,field_description:l10n_gt_fe.field_res_users__country_id
+msgid "Country"
+msgstr "País"
+
+#. module: l10n_gt_fe
+#: model_terms:ir.ui.view,arch_db:l10n_gt_fe.view_move_form
+msgid "Create XML"
+msgstr "Crear XML"
+
+#. module: l10n_gt_fe
+#: model:ir.model.fields,field_description:l10n_gt_fe.field_account_move_complement__create_uid
+#: model:ir.model.fields,field_description:l10n_gt_fe.field_account_move_payment__create_uid
+#: model:ir.model.fields,field_description:l10n_gt_fe.field_res_company_establishment__create_uid
+msgid "Created by"
+msgstr ""
+
+#. module: l10n_gt_fe
+#: model:ir.model.fields,field_description:l10n_gt_fe.field_account_move_complement__create_date
+#: model:ir.model.fields,field_description:l10n_gt_fe.field_account_move_payment__create_date
+#: model:ir.model.fields,field_description:l10n_gt_fe.field_res_company_establishment__create_date
+msgid "Created on"
+msgstr ""
+
+#. module: l10n_gt_fe
+#: model:ir.model.fields,field_description:l10n_gt_fe.field_account_move_complement__currency_id
+#: model:ir.model.fields,field_description:l10n_gt_fe.field_account_move_payment__currency_id
+msgid "Currency"
+msgstr "Moneda"
+
+#. module: l10n_gt_fe
+#: model:ir.model.fields,field_description:l10n_gt_fe.field_account_move_payment__date
+msgid "Date"
+msgstr "Fecha"
+
+#. module: l10n_gt_fe
+#: model:ir.model.fields,field_description:l10n_gt_fe.field_account_move_complement__display_name
+#: model:ir.model.fields,field_description:l10n_gt_fe.field_account_move_payment__display_name
+#: model:ir.model.fields,field_description:l10n_gt_fe.field_res_company_establishment__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: l10n_gt_fe
+#: model:ir.model.fields,field_description:l10n_gt_fe.field_account_move__fe_pdf_file
+msgid "Download PDF"
+msgstr "Descargar PDF"
+
+#. module: l10n_gt_fe
+#: model:ir.model.fields,field_description:l10n_gt_fe.field_account_move__fe_xml_file
+msgid "Download XML"
+msgstr "Descargar XML"
+
+#. module: l10n_gt_fe
+#: model:ir.model.fields,field_description:l10n_gt_fe.field_res_company__fe_key_webservice
+msgid "EI Key WebServise"
+msgstr "LLAVE DE WEB SERVICE"
+
+#. module: l10n_gt_fe
+#: model:ir.model.fields,field_description:l10n_gt_fe.field_res_company__fe_user
+msgid "EI User"
+msgstr "PREFIJO / USUARIO"
+
+#. module: l10n_gt_fe
+#: model_terms:ir.ui.view,arch_db:l10n_gt_fe.view_company_form
+msgid "Electronic Invoice"
+msgstr "Factura Electrónica"
+
+#. module: l10n_gt_fe
+#: model_terms:ir.ui.view,arch_db:l10n_gt_fe.view_move_form
+msgid "Electronic invoice"
+msgstr "Factura Electrónica"
+
+#. module: l10n_gt_fe
+#: code:addons/l10n_gt_fe/models/account_move.py:0
+#, python-format
+msgid "Error. Date cannot exceed 5 days"
+msgstr "Error. Fecha no puede exceder los 5 días"
+
+#. module: l10n_gt_fe
+#: code:addons/l10n_gt_fe/models/account_move.py:0
+#, python-format
+msgid "Error. Empty invoice"
+msgstr "Error. Factura vacia"
+
+#. module: l10n_gt_fe
+#: code:addons/l10n_gt_fe/models/account_move.py:0
+#, python-format
+msgid "Error. Enter payments for exchange bill"
+msgstr "Error. Ingrese abonos"
+
+#. module: l10n_gt_fe
+#: code:addons/l10n_gt_fe/models/company.py:0
+#, python-format
+msgid "Error. Token isn't setted"
+msgstr "Error. Token no configurado"
+
+#. module: l10n_gt_fe
+#: code:addons/l10n_gt_fe/models/account_move.py:0
+#, python-format
+msgid "Error. You must send the cancellation to the certifier"
+msgstr "Error. Debe ser cancelado por el certificador"
+
+#. module: l10n_gt_fe
+#: code:addons/l10n_gt_fe/models/company.py:0
+#, python-format
+msgid "Error. credentials aren't setted"
+msgstr "Error. Credenciales no configuradas"
+
+#. module: l10n_gt_fe
+#: model:ir.model.fields,field_description:l10n_gt_fe.field_account_move__fe_errors
+msgid "Errors"
+msgstr ""
+
+#. module: l10n_gt_fe
+#: model:ir.model.fields,field_description:l10n_gt_fe.field_account_journal__fe_establishment_id
+msgid "Establishment"
+msgstr "Establecimiento"
+
+#. module: l10n_gt_fe
+#: model:ir.model.fields,field_description:l10n_gt_fe.field_res_company_establishment__fe_code
+msgid "Establishment Code"
+msgstr "Código Establecimiento"
+
+#. module: l10n_gt_fe
+#: model:ir.model.fields,field_description:l10n_gt_fe.field_res_company__fe_establishment_ids
+msgid "Establishments"
+msgstr "Establecimientos"
+
+#. module: l10n_gt_fe
+#: model:res.groups,name:l10n_gt_fe.group_fel_manager
+msgid "FEL Manager"
+msgstr "Usuario FEL"
+
+#. module: l10n_gt_fe
+#: model:ir.model.fields.selection,name:l10n_gt_fe.selection__account_journal__fe_type__fact
+msgid "Factura"
+msgstr ""
+
+#. module: l10n_gt_fe
+#: model:ir.model.fields.selection,name:l10n_gt_fe.selection__account_journal__fe_type__fcam
+msgid "Factura Cambiaria"
+msgstr ""
+
+#. module: l10n_gt_fe
+#: model:ir.model.fields.selection,name:l10n_gt_fe.selection__account_journal__fe_type__fesp
+msgid "Factura Especial"
+msgstr ""
+
+#. module: l10n_gt_fe
+#: model:ir.model.fields.selection,name:l10n_gt_fe.selection__account_journal__fe_type__faex
+msgid "Factura Exportación"
+msgstr ""
+
+#. module: l10n_gt_fe
+#: model:ir.model.fields.selection,name:l10n_gt_fe.selection__account_move__process_status__fail
+msgid "Failed"
+msgstr "Fallido"
+
+#. module: l10n_gt_fe
+#: model_terms:ir.ui.view,arch_db:l10n_gt_fe.view_move_form
+msgid "Get PDF"
+msgstr "Obtener PDF"
+
+#. module: l10n_gt_fe
+#: model:ir.model.fields,field_description:l10n_gt_fe.field_account_move_complement__id
+#: model:ir.model.fields,field_description:l10n_gt_fe.field_account_move_payment__id
+#: model:ir.model.fields,field_description:l10n_gt_fe.field_res_company_establishment__id
+msgid "ID"
+msgstr ""
+
+#. module: l10n_gt_fe
+#: model:ir.model.fields.selection,name:l10n_gt_fe.selection__account_tax_group__shortname__isr
+msgid "ISR"
+msgstr ""
+
+#. module: l10n_gt_fe
+#: model:ir.model.fields.selection,name:l10n_gt_fe.selection__account_tax_group__shortname__iva
+msgid "IVA"
+msgstr ""
+
+#. module: l10n_gt_fe
+#: model:ir.model.fields,field_description:l10n_gt_fe.field_account_move_complement__move_id
+#: model:ir.model.fields,field_description:l10n_gt_fe.field_account_move_payment__move_id
+msgid "Invoice"
+msgstr "Factura"
+
+#. module: l10n_gt_fe
+#: model:ir.model,name:l10n_gt_fe.model_account_journal
+msgid "Journal"
+msgstr "Diario"
+
+#. module: l10n_gt_fe
+#: model:ir.model,name:l10n_gt_fe.model_account_move
+msgid "Journal Entries"
+msgstr "Asientos contables"
+
+#. module: l10n_gt_fe
+#: model:ir.model,name:l10n_gt_fe.model_account_move_line
+msgid "Journal Item"
+msgstr "Apunte contable"
+
+#. module: l10n_gt_fe
+#: model:ir.model.fields,field_description:l10n_gt_fe.field_account_move_complement____last_update
+#: model:ir.model.fields,field_description:l10n_gt_fe.field_account_move_payment____last_update
+#: model:ir.model.fields,field_description:l10n_gt_fe.field_res_company_establishment____last_update
+msgid "Last Modified on"
+msgstr ""
+
+#. module: l10n_gt_fe
+#: model:ir.model.fields,field_description:l10n_gt_fe.field_account_move_complement__write_uid
+#: model:ir.model.fields,field_description:l10n_gt_fe.field_account_move_payment__write_uid
+#: model:ir.model.fields,field_description:l10n_gt_fe.field_res_company_establishment__write_uid
+msgid "Last Updated by"
+msgstr ""
+
+#. module: l10n_gt_fe
+#: model:ir.model.fields,field_description:l10n_gt_fe.field_account_move_complement__write_date
+#: model:ir.model.fields,field_description:l10n_gt_fe.field_account_move_payment__write_date
+#: model:ir.model.fields,field_description:l10n_gt_fe.field_res_company_establishment__write_date
+msgid "Last Updated on"
+msgstr ""
+
+#. module: l10n_gt_fe
+#: model:ir.model.fields.selection,name:l10n_gt_fe.selection__account_journal__fe_type__nabn
+msgid "Nota de Abono"
+msgstr ""
+
+#. module: l10n_gt_fe
+#: model:ir.model.fields.selection,name:l10n_gt_fe.selection__account_journal__fe_type__ncre
+msgid "Nota de Crédito"
+msgstr ""
+
+#. module: l10n_gt_fe
+#: model:ir.model.fields.selection,name:l10n_gt_fe.selection__account_journal__fe_type__ndeb
+msgid "Nota de Débito"
+msgstr ""
+
+#. module: l10n_gt_fe
+#: model:ir.model.fields,field_description:l10n_gt_fe.field_account_move__fe_number
+msgid "Number"
+msgstr "Numero"
+
+#. module: l10n_gt_fe
+#: model:ir.model.fields,field_description:l10n_gt_fe.field_account_move__fe_count_payment
+msgid "Number of Payments"
+msgstr "Numero de Pagos"
+
+#. module: l10n_gt_fe
+#: model:ir.model.fields,field_description:l10n_gt_fe.field_res_company__fe_other_email
+msgid "Other Email"
+msgstr "Otro Email"
+
+#. module: l10n_gt_fe
+#: model:ir.model.fields.selection,name:l10n_gt_fe.selection__account_tax_group__shortname__petroleo
+msgid "PETROLEO"
+msgstr ""
+
+#. module: l10n_gt_fe
+#: model:ir.model.fields,field_description:l10n_gt_fe.field_account_move__fe_payment_frequency
+msgid "Payment Frequency"
+msgstr "Frecuencia de Abonos"
+
+#. module: l10n_gt_fe
+#: model:ir.model.fields,field_description:l10n_gt_fe.field_account_move__fe_payment_line_ids
+msgid "Payment Lines"
+msgstr "Line de Abonos"
+
+#. module: l10n_gt_fe
+#: model:ir.model.fields.selection,name:l10n_gt_fe.selection__account_move__process_status__process
+msgid "Process"
+msgstr "En Proceso"
+
+#. module: l10n_gt_fe
+#: model:ir.model.fields,field_description:l10n_gt_fe.field_account_move__process_status
+msgid "Process Status"
+msgstr "Status"
+
+#. module: l10n_gt_fe
+#: model:ir.model.fields.selection,name:l10n_gt_fe.selection__account_move_complement__complement__isr
+msgid "RETENCIÓN ISR"
+msgstr ""
+
+#. module: l10n_gt_fe
+#: model:ir.model.fields.selection,name:l10n_gt_fe.selection__account_move_complement__complement__iva
+msgid "RETENCIÓN IVA"
+msgstr ""
+
+#. module: l10n_gt_fe
+#: model_terms:ir.ui.view,arch_db:l10n_gt_fe.view_move_form
+msgid "SAT Response"
+msgstr "Respuesta SAT"
+
+#. module: l10n_gt_fe
+#: model:ir.model.fields,field_description:l10n_gt_fe.field_account_move_payment__sequence
+msgid "Sequence"
+msgstr ""
+
+#. module: l10n_gt_fe
+#: model:ir.model.fields,field_description:l10n_gt_fe.field_account_move__fe_serie
+msgid "Serie"
+msgstr ""
+
+#. module: l10n_gt_fe
+#: model:res.groups,name:l10n_gt_fe.set_draft_invoice
+msgid "Set Draft Invoice"
+msgstr ""
+
+#. module: l10n_gt_fe
+#: model:ir.model.fields,field_description:l10n_gt_fe.field_account_tax_group__shortname
+msgid "Shortname"
+msgstr "Nombre corto"
+
+#. module: l10n_gt_fe
+#: model:ir.model.fields,field_description:l10n_gt_fe.field_res_company__fe_sign_token
+msgid "Sign Token"
+msgstr "Token de Frima"
+
+#. module: l10n_gt_fe
+#: model:ir.model.fields,field_description:l10n_gt_fe.field_account_move_line__price_tax
+msgid "Subtotal"
+msgstr ""
+
+#. module: l10n_gt_fe
+#: model:ir.model.fields.selection,name:l10n_gt_fe.selection__account_tax_group__shortname__tabaco
+msgid "TABACO"
+msgstr ""
+
+#. module: l10n_gt_fe
+#: model:ir.model.fields.selection,name:l10n_gt_fe.selection__account_tax_group__shortname__tarifa_portuaria
+msgid "TARIFA PORTUARIA"
+msgstr ""
+
+#. module: l10n_gt_fe
+#: model:ir.model.fields.selection,name:l10n_gt_fe.selection__account_tax_group__shortname__tasa_municipal
+msgid "TASA MUNICIPAL"
+msgstr ""
+
+#. module: l10n_gt_fe
+#: model:ir.model.fields.selection,name:l10n_gt_fe.selection__account_tax_group__shortname__timbre_de_prensa
+msgid "TIMBRE DE PRENSA"
+msgstr ""
+
+#. module: l10n_gt_fe
+#: model:ir.model.fields.selection,name:l10n_gt_fe.selection__account_tax_group__shortname__turismo_hospedaje
+msgid "TURISMO HOSPEDAJE"
+msgstr ""
+
+#. module: l10n_gt_fe
+#: model:ir.model,name:l10n_gt_fe.model_account_tax_group
+msgid "Tax Group"
+msgstr "Grupo de impuestos"
+
+#. module: l10n_gt_fe
+#: model:ir.model.fields,field_description:l10n_gt_fe.field_res_company_establishment__fe_tradename
+msgid "Tradename"
+msgstr "Nombre Comercial"
+
+#. module: l10n_gt_fe
+#: model:ir.model.fields,field_description:l10n_gt_fe.field_account_journal__fe_type
+#: model:ir.model.fields,field_description:l10n_gt_fe.field_account_move__fe_type
+msgid "Type"
+msgstr "Tipo FEL"
+
+#. module: l10n_gt_fe
+#: model:ir.model.fields,field_description:l10n_gt_fe.field_account_move__fe_uuid
+msgid "UUID"
+msgstr ""
+
+#. module: l10n_gt_fe
+#: model:ir.model.fields,field_description:l10n_gt_fe.field_account_move__arch_xml
+#: model:ir.model.fields,help:l10n_gt_fe.field_account_move__arch_xml
+msgid "XML Architecture"
+msgstr "Cuerpo XML"
+
+#. module: l10n_gt_fe
+#: model_terms:ir.ui.view,arch_db:l10n_gt_fe.view_move_form
+msgid "XML Response"
+msgstr "RESPUESTA XML"
+
+#. module: l10n_gt_fe
+#: model:ir.model.fields.selection,name:l10n_gt_fe.selection__account_move__process_status__ok
+msgid "success"
+msgstr "Exitoso"
