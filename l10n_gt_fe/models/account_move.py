@@ -47,6 +47,10 @@ class AccountMove(models.Model):
         compute="_compute_partner_vat",
     )
     is_fel = fields.Boolean(string="FEL", related="journal_id.active_fel")
+    is_certifiable_fel = fields.Boolean(
+        string="Documento FEL certificable",
+        compute="_compute_is_certifiable_fel",
+    )
     fe_type = fields.Selection(
         string="Tipo de DTE",
         related="journal_id.fe_type",
@@ -266,13 +270,39 @@ class AccountMove(models.Model):
             ]
 
     def _is_outgoing_fel(self):
+        """Return whether this is a sales-side FEL document."""
         self.ensure_one()
         return bool(
             self.move_type in OUTGOING_MOVE_TYPES
+            and self.journal_id.type == "sale"
             and self.journal_id.active_fel
             and self.fe_type
             and self.fe_type != "OTRO"
         )
+
+    def _is_purchase_fesp(self):
+        """A FESP is emitted by the buyer and recorded as a vendor bill."""
+        self.ensure_one()
+        return bool(
+            self.move_type == "in_invoice"
+            and self.journal_id.type == "purchase"
+            and self.journal_id.active_fel
+            and self.fe_type == "FESP"
+        )
+
+    def _is_certifiable_fel(self):
+        self.ensure_one()
+        return self._is_outgoing_fel() or self._is_purchase_fesp()
+
+    @api.depends(
+        "move_type",
+        "journal_id.type",
+        "journal_id.active_fel",
+        "journal_id.fe_type",
+    )
+    def _compute_is_certifiable_fel(self):
+        for move in self:
+            move.is_certifiable_fel = move._is_certifiable_fel()
 
     @staticmethod
     def _normalize_identifier(value):
@@ -340,7 +370,7 @@ class AccountMove(models.Model):
 
     def _validate_fel_document(self):
         self.ensure_one()
-        if not self._is_outgoing_fel():
+        if not self._is_certifiable_fel():
             return
 
         company = self.company_id
@@ -416,7 +446,7 @@ class AccountMove(models.Model):
             )
 
     def action_post(self):
-        fel_moves = self.filtered(lambda move: move._is_outgoing_fel())
+        fel_moves = self.filtered(lambda move: move._is_certifiable_fel())
         if len(fel_moves) > 1:
             raise UserError(
                 _(
@@ -971,9 +1001,9 @@ class AccountMove(models.Model):
 
     def send_invoice(self):
         self.ensure_one()
-        if not self._is_outgoing_fel():
+        if not self._is_certifiable_fel():
             raise UserError(
-                _("This document is not configured as an outgoing FEL document.")
+                _("This accounting document is not configured for FEL certification.")
             )
         if self.state != "posted":
             raise UserError(_("Post the invoice before certifying the DTE."))
@@ -1102,7 +1132,7 @@ class AccountMove(models.Model):
     def cancel_dte(self):
         self.ensure_one()
         if (
-            not self._is_outgoing_fel()
+            not self._is_certifiable_fel()
             or self.process_status != "ok"
             or not self.fe_uuid
         ):
@@ -1170,7 +1200,7 @@ class AccountMove(models.Model):
 
     def button_cancel(self):
         certified = self.filtered(
-            lambda move: move._is_outgoing_fel() and move.process_status == "ok"
+            lambda move: move._is_certifiable_fel() and move.process_status == "ok"
         )
         if certified:
             raise UserError(

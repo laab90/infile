@@ -23,6 +23,15 @@ token requerido para consultas CUI se renueva automáticamente cuando falta o
 cuando Infile responde que venció; también puede renovarse manualmente desde la
 pestaña **FEL / Infile** de la compañía.
 
+## Diarios FEL iniciales
+
+Al instalar o actualizar el módulo se crean, para cada compañía existente, los
+diarios de venta para FACT, FCAM, NDEB, NCRE, NABN y FAEX, y el diario de compra
+para Factura Especial (FESP). Se crean con el tipo de DTE asignado y con FEL
+desactivado; seleccione el establecimiento correspondiente y active **Usar FEL /
+Infile** antes de utilizarlos. El proceso conserva los diarios ya configurados y
+no crea duplicados en actualizaciones posteriores.
+
 Las credenciales no se incluyen en el repositorio. Los endpoints productivos de
 Infile se crean como parámetros de sistema con `noupdate="1"`, por lo que pueden
 ser sustituidos sin que una actualización del módulo los sobrescriba.

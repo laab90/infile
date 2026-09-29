@@ -7,6 +7,7 @@
         <field name="arch" type="xml">
             <xpath expr="//field[@name='journal_id']" position="before">
                 <field name="is_fel" invisible="1"/>
+                <field name="is_certifiable_fel" invisible="1"/>
                 <field name="rel_establishment_user" invisible="1"/>
             </xpath>
 
@@ -15,17 +16,17 @@
             </xpath>
 
             <xpath expr="//div[@name='journal_div']" position="after">
-                <field name="fe_type" invisible="not is_fel"/>
+                <field name="fe_type" invisible="not is_certifiable_fel"/>
                 <field name="fe_phrase_ids"
                        widget="many2many_tags"
-                       invisible="not is_fel or move_type not in ('out_invoice', 'out_refund')"
+                       invisible="not is_certifiable_fel"
                        readonly="state != 'draft'"/>
                 <field name="partner_type"
-                       invisible="not is_fel or move_type not in ('out_invoice', 'out_refund')"/>
+                       invisible="not is_certifiable_fel"/>
                 <label for="fe_use_new_vat"
-                       invisible="not is_fel or move_type not in ('out_invoice', 'out_refund')"/>
+                       invisible="not is_certifiable_fel"/>
                 <div class="d-flex"
-                     invisible="not is_fel or move_type not in ('out_invoice', 'out_refund')">
+                     invisible="not is_certifiable_fel">
                     <field name="fe_use_new_vat" readonly="state != 'draft'"/>
                     <field name="fe_new_vat_id"
                            class="ms-2"
@@ -52,25 +53,25 @@
                         type="object"
                         string="Certificar DTE"
                         class="oe_highlight"
-                        invisible="not is_fel or process_status in ('cancel', 'ok') or state != 'posted' or move_type not in ('out_invoice', 'out_refund')"/>
+                        invisible="not is_certifiable_fel or process_status in ('cancel', 'ok') or state != 'posted'"/>
                 <button name="cancel_dte"
                         type="object"
                         string="Anular DTE"
                         class="btn-secondary"
                         groups="l10n_gt_fe.group_fel_manager"
                         confirm="Esta operación anulará el DTE en Infile y cancelará el documento contable. ¿Desea continuar?"
-                        invisible="not is_fel or process_status != 'ok' or state != 'posted' or move_type not in ('out_invoice', 'out_refund')"/>
+                        invisible="not is_certifiable_fel or process_status != 'ok' or state != 'posted'"/>
                 <button name="get_pdf"
                         type="object"
                         string="Obtener PDF"
                         class="btn-secondary"
-                        invisible="not is_fel or process_status not in ('ok', 'cancel') or move_type not in ('out_invoice', 'out_refund')"/>
+                        invisible="not is_certifiable_fel or process_status not in ('ok', 'cancel')"/>
             </header>
 
             <xpath expr="//notebook" position="inside">
                 <page name="fel_infile"
                       string="FEL / Infile"
-                      invisible="not is_fel or move_type not in ('out_invoice', 'out_refund')">
+                      invisible="not is_certifiable_fel">
                     <group>
                         <group string="Certificación">
                             <field name="process_status"

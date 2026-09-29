@@ -221,6 +221,59 @@ class TestFelXml(TransactionCase):
         self.assertEqual(field.attrib.get("colspan"), "2")
         self.assertIn("w-100", field.attrib.get("class", "").split())
 
+    def test_supported_fel_journals_are_provisioned_idempotently(self):
+        expected_journals = {
+            "FACT": "sale",
+            "FCAM": "sale",
+            "NDEB": "sale",
+            "NCRE": "sale",
+            "NABN": "sale",
+            "FAEX": "sale",
+            "FESP": "purchase",
+        }
+        journals = self.env["account.journal"].with_context(active_test=False)
+        domain = [
+            ("company_id", "=", self.company.id),
+            ("fe_type", "in", list(expected_journals)),
+        ]
+
+        for fe_type, journal_type in expected_journals.items():
+            self.assertTrue(
+                journals.search(
+                    domain
+                    + [("fe_type", "=", fe_type), ("type", "=", journal_type)],
+                    limit=1,
+                ),
+                "%s journal was not provisioned" % fe_type,
+            )
+
+        journal_ids = set(journals.search(domain).ids)
+        journals._ensure_fel_journals()
+        self.assertEqual(set(journals.search(domain).ids), journal_ids)
+
+    def test_purchase_fesp_is_certifiable(self):
+        journal = self.env["account.journal"].search(
+            [
+                ("company_id", "=", self.company.id),
+                ("type", "=", "purchase"),
+                ("fe_type", "=", "FESP"),
+            ],
+            limit=1,
+        )
+        journal.write(
+            {
+                "active_fel": True,
+                "fe_establishment_id": self.establishment.id,
+            }
+        )
+        vendor_bill = self.env["account.move"].new(
+            {"move_type": "in_invoice", "journal_id": journal.id}
+        )
+
+        self.assertTrue(vendor_bill._is_purchase_fesp())
+        self.assertTrue(vendor_bill._is_certifiable_fel())
+        self.assertFalse(vendor_bill._fields["is_certifiable_fel"].store)
+
     def test_nit_lookup_updates_partner_and_normalizes_identifier(self):
         duplicate = self.env["res.partner"].create(
             {

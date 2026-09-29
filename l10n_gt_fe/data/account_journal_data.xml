@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!--
+        Provision one journal for each DTE supported by this module in every
+        existing company.  The model method is idempotent, so this data file is
+        safe on both installation and module updates.
+    -->
+    <function model="account.journal" name="_ensure_fel_journals"/>
+</odoo>
