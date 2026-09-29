@@ -139,6 +139,15 @@ class TestFelXml(TransactionCase):
         self.assertAlmostEqual(line.price_total, 112.0, places=2)
         self.assertAlmostEqual(line.price_tax, 12.0, places=2)
 
+    def test_auxiliary_currency_fields_are_not_stored(self):
+        for model_name in (
+            "account.move.complement",
+            "account.move.payment",
+            "charge.third.party.account",
+        ):
+            with self.subTest(model=model_name):
+                self.assertFalse(self.env[model_name]._fields["currency_id"].store)
+
     def test_fact_xml_contains_valid_amounts_and_timezone(self):
         self.company.fe_vat_affiliation = "PEQ"
         invoice = self._create_invoice()
@@ -197,3 +206,4 @@ class TestFelXml(TransactionCase):
 
         self.assertAlmostEqual(charge.amount_taxes, 12.0, places=2)
         self.assertAlmostEqual(charge.amount_total, 120.0, places=2)
+        self.assertEqual(charge.currency_id, invoice.currency_id)

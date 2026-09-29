@@ -1294,7 +1294,6 @@ class AccountMoveComplement(models.Model):
     )
     currency_id = fields.Many2one(
         related="move_id.currency_id",
-        store=True,
         readonly=True,
     )
 
@@ -1316,7 +1315,6 @@ class AccountMovePayment(models.Model):
     date = fields.Date(string="Date", required=True)
     currency_id = fields.Many2one(
         related="move_id.currency_id",
-        store=True,
         readonly=True,
     )
     amount = fields.Monetary(

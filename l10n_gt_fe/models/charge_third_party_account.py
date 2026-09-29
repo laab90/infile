@@ -11,7 +11,6 @@ class ChargeThirdPartyAccount(models.Model):
     name = fields.Char(string="Descripcion", required=True)
     currency_id = fields.Many2one(
         related="move_id.currency_id",
-        store=True,
         readonly=True,
     )
     amount_untaxes = fields.Monetary(string="Base Imponible", required=True)
