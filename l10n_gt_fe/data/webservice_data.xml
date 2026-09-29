@@ -15,5 +15,20 @@
             <field name="key">url.webservice.cancel.fe</field>
             <field name="value">https://certificador.feel.com.gt/fel/anulacion/v2/dte/</field>
         </record>
+
+        <record id="url_token_access" model="ir.config_parameter">
+            <field name="key">url.webservice.token.access</field>
+            <field name="value">https://certificador.feel.com.gt/api/v2/servicios/externos/login</field>
+        </record>
+
+        <record id="url_cui_service" model="ir.config_parameter">
+            <field name="key">url.webservice.cui.service</field>
+            <field name="value">https://certificador.feel.com.gt/api/v2/servicios/externos/cui</field>
+        </record>
+
+        <record id="url_nit_services" model="ir.config_parameter">
+            <field name="key">url.webservice.nit.service</field>
+            <field name="value">https://consultareceptores.feel.com.gt/rest/action</field>
+        </record>
     </data>
 </odoo>

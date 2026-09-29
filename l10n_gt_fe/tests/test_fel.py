@@ -1,4 +1,5 @@
 from xml.etree import ElementTree as ET
+from unittest.mock import Mock, patch
 
 from odoo import Command, fields
 from odoo.tests.common import TransactionCase, tagged
@@ -131,6 +132,13 @@ class TestFelXml(TransactionCase):
     def _find(root, path):
         return root.find(path, {"dte": "http://www.sat.gob.gt/dte/fel/0.2.0"})
 
+    @staticmethod
+    def _infile_response(data, status_code=200):
+        response = Mock(status_code=status_code)
+        response.json.return_value = data
+        response.raise_for_status.return_value = None
+        return response
+
     def test_odoo_17_totals_are_preserved(self):
         invoice = self._create_invoice()
         line = invoice.invoice_line_ids
@@ -212,6 +220,78 @@ class TestFelXml(TransactionCase):
         self.assertIsNotNone(field)
         self.assertEqual(field.attrib.get("colspan"), "2")
         self.assertIn("w-100", field.attrib.get("class", "").split())
+
+    def test_nit_lookup_updates_partner_and_normalizes_identifier(self):
+        duplicate = self.env["res.partner"].create(
+            {
+                "name": "Contacto existente",
+                "vat": "1234567K",
+                "partner_type": "NIT",
+            }
+        )
+        partner = self.env["res.partner"].create(
+            {
+                "name": "Pendiente",
+                "vat": "1234-567K",
+                "partner_type": "NIT",
+            }
+        )
+        response = self._infile_response(
+            {"nit": "1234567K", "nombre": "CLIENTE INFILE, S.A.", "mensaje": ""}
+        )
+
+        with patch(
+            "odoo.addons.l10n_gt_fe.models.company.requests.post",
+            return_value=response,
+        ) as request:
+            action = partner.get_fiscal_name()
+
+        self.assertEqual(partner.vat, "1234567K")
+        self.assertEqual(partner.name, "CLIENTE INFILE, S.A.")
+        self.assertTrue(duplicate.exists())
+        self.assertEqual(action["tag"], "display_notification")
+        self.assertTrue(action["params"]["sticky"])
+        self.assertEqual(request.call_args.kwargs["json"]["nit_consulta"], "1234567K")
+        self.assertEqual(request.call_args.kwargs["timeout"], (10, 30))
+
+    def test_cui_lookup_refreshes_an_expired_token(self):
+        partner = self.env["res.partner"].create(
+            {
+                "name": "Pendiente",
+                "vat": "1234567890101",
+                "partner_type": "CUI",
+            }
+        )
+        self.company.token = "EXPIRED"
+        unauthorized = self._infile_response({}, status_code=401)
+        login = self._infile_response(
+            {
+                "resultado": True,
+                "token": "NEW_TOKEN",
+                "fecha": "2026-09-29 01:00:00",
+                "fecha_de_vencimiento": "2026-09-29 02:00:00",
+            }
+        )
+        lookup = self._infile_response(
+            {
+                "descripcion": "OK",
+                "cui": {"nombre": "PERSONA CONSULTADA"},
+            }
+        )
+
+        with patch(
+            "odoo.addons.l10n_gt_fe.models.company.requests.post",
+            side_effect=[unauthorized, login, lookup],
+        ) as request:
+            partner.get_fiscal_name()
+
+        self.assertEqual(partner.name, "PERSONA CONSULTADA")
+        self.assertEqual(self.company.token, "NEW_TOKEN")
+        self.assertEqual(request.call_count, 3)
+        self.assertEqual(
+            request.call_args_list[2].kwargs["headers"]["Authorization"],
+            "Bearer NEW_TOKEN",
+        )
 
     def test_fact_xml_contains_valid_amounts_and_timezone(self):
         self.company.fe_vat_affiliation = "PEQ"

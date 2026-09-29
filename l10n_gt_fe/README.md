@@ -14,6 +14,15 @@ anulación y representación gráfica de Infile.
 4. En los grupos de impuestos configure el **Nombre corto FEL** (por ejemplo,
    `IVA`) y marque los grupos de retención cuando corresponda.
 
+## Consulta fiscal de receptores
+
+En la ficha del contacto seleccione **NIT** o **DPI**, ingrese la identificación
+y pulse **Consultar en Infile** para completar la razón social o el nombre. La
+consulta utiliza las mismas credenciales API configuradas en la compañía. El
+token requerido para consultas CUI se renueva automáticamente cuando falta o
+cuando Infile responde que venció; también puede renovarse manualmente desde la
+pestaña **FEL / Infile** de la compañía.
+
 Las credenciales no se incluyen en el repositorio. Los endpoints productivos de
 Infile se crean como parámetros de sistema con `noupdate="1"`, por lo que pueden
 ser sustituidos sin que una actualización del módulo los sobrescriba.

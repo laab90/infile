@@ -12,6 +12,30 @@
                 </field>
             </field>
         </record>
+
+        <record id="res_partner_vat_service_view_form" model="ir.ui.view">
+            <field name="name">res.partner.form.fel.lookup.infile</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="view_partner_form_fel"/>
+            <field name="arch" type="xml">
+                <field name="vat" position="replace">
+                    <label for="vat" string="NIT / CUI"/>
+                    <div class="o_row">
+                        <field name="vat"
+                               placeholder="1234567K / 1234567890101"
+                               class="oe_inline"
+                               readonly="parent_id"/>
+                        <button name="get_fiscal_name"
+                                type="object"
+                                string="Consultar en Infile"
+                                icon="fa-search"
+                                class="btn btn-secondary btn-sm ms-2"
+                                groups="base.group_user"
+                                invisible="parent_id or not vat or partner_type == 'EXT' or vat in ('CF', 'cf', 'C/F', 'c/f')"/>
+                    </div>
+                </field>
+            </field>
+        </record>
     </data>
 
 </odoo>

@@ -42,6 +42,30 @@
                 </notebook>
             </field>
         </record>
+
+        <record id="res_company_view_fe_cui" model="ir.ui.view">
+            <field name="name">res.company.form.fel.lookup.infile</field>
+            <field name="model">res.company</field>
+            <field name="inherit_id" ref="view_company_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//page[@name='fe']" position="inside">
+                    <group string="Consulta de receptores Infile">
+                        <group>
+                            <button name="get_token_cui"
+                                    type="object"
+                                    string="Renovar token CUI"
+                                    icon="fa-refresh"
+                                    class="btn-secondary"/>
+                        </group>
+                        <group>
+                            <field name="cosume_date"/>
+                            <field name="due_date"/>
+                            <field name="token" invisible="1"/>
+                        </group>
+                    </group>
+                </xpath>
+            </field>
+        </record>
     </data>
 
 </odoo>
